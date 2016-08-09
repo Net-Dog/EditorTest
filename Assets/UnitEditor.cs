@@ -1,20 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+[CustomEditor(typeof(UnitController))]
+public class UnitEditor : Editor {
 
-public class UnitEditor : EditorWindow {
+    SerializedProperty Hp;
+    SerializedProperty Speed;
+    SerializedProperty Weapon;
 
-    public void OnGUI() {
+    SerializedProperty fff;
 
+    void OnEnable()
+    {
+        Hp = serializedObject.FindProperty("Hp");
+        Speed = serializedObject.FindProperty("Speed");
+
+        Weapon = serializedObject.FindProperty("wep");
+        //fff = serializedObject.FindProperty("wep");
+        //Debug.Log("fasfasfas");
     }
-
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+        Hp.floatValue = EditorGUILayout.FloatField("Head Point", Hp.floatValue, GUILayout.Width(200));
+        Speed.floatValue = EditorGUILayout.FloatField("Speed", (target as UnitController).Speed, GUILayout.Width(200));
+        UnitController.Weapon index = (UnitController.Weapon)EditorGUILayout.EnumPopup("Weapon", (UnitController.Weapon)Weapon.enumValueIndex, GUILayout.Width(200));
+        Weapon.enumValueIndex = (int)index;
+        serializedObject.ApplyModifiedProperties();
+    }
 }

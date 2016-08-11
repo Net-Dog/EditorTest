@@ -11,6 +11,7 @@ public class EnemyEditorDifficile : Editor {
     SerializedProperty _btr;
     SerializedProperty _tank;
     SerializedProperty _countLevel;
+    SerializedProperty _testCar;
     static bool Lock = false;
 
     void OnEnable() {

@@ -45,13 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\SCSDefficileLevel.cs" />
-     <Compile Include="Assets\Script\ConfigLevelController.cs" />
-     <Compile Include="Assets\Script\CustomAssetUtility.cs" />
-     <Compile Include="Assets\Script\EnemyEditorDifficile.cs" />
-     <Compile Include="Assets\Script\GameAssetUtility.cs" />
      <Compile Include="Assets\Script\UnitController.cs" />
-     <Compile Include="Assets\Script\UnitEditor.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 5.3.4/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

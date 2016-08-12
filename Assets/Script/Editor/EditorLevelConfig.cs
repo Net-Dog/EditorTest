@@ -9,11 +9,13 @@ public class EditorLevelConfig : Editor {
     SerializedProperty countLocation;
     SerializedProperty listLocation;
     bool[] arrLocationStat;
+    bool[] bossStat;
     bool[][] arrLevelStat;
     public void OnEnable() {
         countLocation = serializedObject.FindProperty("_countLocation");
         listLocation = serializedObject.FindProperty("_listLocation");
         arrLevelStat = new bool[countLocation.intValue+1][];
+        bossStat = new bool[countLocation.intValue + 1];
         arrLocationStat = new bool[countLocation.intValue+1];
         for (int i = 0; i < countLocation.intValue; i++) {
             arrLevelStat[i] = new bool[listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_countLevel").intValue + 1];
@@ -23,6 +25,7 @@ public class EditorLevelConfig : Editor {
     }
     private void SetLengthList() {
         if (arrLevelStat.Length != countLocation.intValue + 1) {
+            bossStat = new bool[countLocation.intValue + 1];
             arrLocationStat = new bool[countLocation.intValue + 1];
             arrLevelStat = new bool[countLocation.intValue + 1][];
             for (int i = 0; i < arrLevelStat.Length; i++) {
@@ -77,6 +80,16 @@ public class EditorLevelConfig : Editor {
                     //UnityEditorInternal.ReorderableList l = new UnityEditorInternal.ReorderableList()
                     //UnityEditorInternal.ReorderableList
                 }
+                bossStat[i] = EditorGUILayout.Foldout(bossStat[i], "BOSS");
+                if(bossStat[i] == true) {
+                    GUILayout.BeginHorizontal();
+                    listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_mission").enumValueIndex = (int)(Mission)EditorGUILayout.EnumPopup("Mission", (Mission)listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_mission").enumValueIndex);
+                    listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_isOff").boolValue = EditorGUILayout.Toggle(listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_isOff").boolValue);
+                    if (listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_isOff").boolValue == true)
+                        listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_time").intValue = EditorGUILayout.IntField(listLocation.GetArrayElementAtIndex(i).FindPropertyRelative("_boss").FindPropertyRelative("_time").intValue);
+                    GUILayout.EndHorizontal();
+                }
+
             }
         }
         serializedObject.ApplyModifiedProperties();
